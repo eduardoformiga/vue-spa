@@ -2,6 +2,8 @@
   <div class="content">
     <div v-if="isAuthenticated">
       Hello authenticated user!
+      <p>Name: {{profile.firstName}}</p>
+      <p>Favorite Sandwich: {{profile.favoriteSandwich}}</p>
       <button v-on:click="logout()" class="button is-primary">Logout</button>
     </div>
     <div v-else>
@@ -52,7 +54,19 @@ export default {
     return {
       username: '',
       password: '',
-      isAuthenticated: false
+      isAuthenticated: false,
+      profile: {}
+    }
+  },
+  watch: {
+    isAuthenticated: function(val) {
+      if (val) {
+        appService.getProfile().then(profile => {
+          this.profile = profile
+        })
+      } else {
+        this.profile = {}
+      }
     }
   },
   methods: {
