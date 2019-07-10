@@ -10,31 +10,25 @@
 </template>
 <script>
 import Post from './Post.vue'
-import appService from '../app.service'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     'app-post': Post
   },
-  data() {
-    return {
-      id: this.$route.params.id,
-      posts: []
-    }
+  computed: {
+    ...mapGetters('postsModule', ['posts'])
   },
   methods: {
     loadPosts() {
       let categoryId = 2
-      if (this.id === 'mobile') {
+      if (this.$route.params.id === 'mobile') {
         categoryId = 11
       }
-      appService.getPosts(categoryId).then(data => {
-        this.posts = data
-      })
+      this.$store.dispatch('postsModule/updateCategory', categoryId)
     }
   },
   watch: {
     $route(to, from) {
-      this.id = to.params.id
       this.loadPosts()
     }
   },
