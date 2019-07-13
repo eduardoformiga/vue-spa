@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 import Category from '../../../src/theme/Category.vue'
 
 describe('Category.vue', () => {
-  it('should load front-end links', done => {
+  it('should load frontend links', done => {
     Vue.use(VueRouter)
     const router = new VueRouter({
       routes: [{ path: '/', component: Category }]
